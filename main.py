@@ -162,15 +162,13 @@ def clearx():
     stack = []
     RPNlist = []
 
-def main():
-
+def evaluate():
     global expression
-
     try:
         validate_expression(expression)
         ConvertToRPN()
         Calculate()
-        Answer= str(stack[0])
+        Answer = str(stack[0])
         print(Answer)
         clearx()
     except ZeroDivisionError:
@@ -179,7 +177,23 @@ def main():
         print("Syntax error")
     except Exception as e:
         print(e)
+def main():
 
+    global expression
+    print('#'*50)
+    print()
+    print('******', "Welcome to my Calculator", '******')
+    print()
+    print("Enter 'w' to stop")
+    print()
+    print('_'*50)
+    print()
+    expression = input("Enter an expression : ")
+    print()
+    while expression != 'w':
+        evaluate()
+        print()
+        expression = input("Enter an expression : ")
 main()
 
 
