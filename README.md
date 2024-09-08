@@ -91,4 +91,4 @@ git clone <repository-url>
 5. Create a pull request with a detailed explanation of your changes.
 
 ## License
-This project is licensed under the MIT License. You can view the full license [here](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License. You can view the full license [here](https://github.com/Tinovongajr/Calculator/blob/main/LICENSE).
