@@ -1,103 +1,108 @@
-# Calculator Application
+# Calculator Program
 
-![Python](https://img.shields.io/badge/python-3.x-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-A simple calculator application built with Python and Tkinter, supporting basic arithmetic operations and following the order of operations.
-
-## Table of Contents
-
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Error Handling](#error-handling)
-- [Implementation Details](#implementation-details)
-- [Limitations](#limitations)
-- [Contributing](#contributing)
-- [License](#license)
+## Overview
+This is a simple calculator program that evaluates mathematical expressions using **Reverse Polish Notation (RPN)**. The program supports basic arithmetic operations such as addition, subtraction, multiplication, division, and exponentiation. 
 
 ## Features
+- Validates expressions for syntax errors.
+- Converts infix expressions (standard mathematical notation) into Reverse Polish Notation.
+- Performs calculations using RPN for evaluation.
 
-- Basic arithmetic operations: addition, subtraction, multiplication, and division
-- Exponentiation (power) operation
-- Decimal point support
-- Parentheses for grouping expressions
-- Error handling for invalid expressions
-- Conversion of infix notation to Reverse Polish Notation (RPN) for calculation
+## Supported Operators
+The program supports the following operators:
+- `+` (Addition)
+- `-` (Subtraction)
+- `*` (Multiplication)
+- `/` (Division)
+- `^` (Exponentiation)
 
-## Requirements
+## Program Functions
 
-- Python 3.x
-- Tkinter library (usually comes pre-installed with Python)
+### `validate_expression(expression)`
+Validates the mathematical expression to ensure it has valid characters and structure.
 
-## Installation
+- **Input:** String (`expression`)
+- **Example:**
+  ```python
+  validate_expression("3 + 5 * 2")
+  ```
+- **Output:** Returns `True` if valid, raises an error if invalid.
 
-1. Clone this repository:
-   ```
-   git clone https://github.com/Tinovongajr/Calculator.git
-   ```
-2. Navigate to the project directory:
-   ```
-   cd Calculator
-   ```
+### `Calculate()`
+Performs the calculation using the generated RPN list.
 
-## Usage
+- **Input:** None (operates on the global `RPNlist` and `stack`).
+- **Example:** 
+  ```python
+  RPNlist = ['3', '5', '2', '*', '+']
+  Calculate()
+  ```
+- **Output:** Updates the `stack` with the result.
 
-Run the application using Python:
+### `reverseString(text)`
+Reverses a given string. This function is used internally during the conversion of the operator stack.
 
+- **Input:** String (`text`)
+- **Example:**
+  ```python
+  reverseString("5+3")
+  ```
+- **Output:** `"3+5"`
+
+### `clearx()`
+Resets all global variables such as the expression, stack, and RPN list.
+
+- **Input:** None
+- **Example:**
+  ```python
+  clearx()
+  ```
+- **Output:** Clears global variables for the next calculation.
+
+### `convertToRPN()`
+Converts an infix expression (standard notation) into Reverse Polish Notation (RPN).
+
+- **Input:** None (operates on the global `expression` variable).
+- **Example:**
+  ```python
+  expression = "3 + 5 * 2"
+  convertToRPN()
+  ```
+- **Output:** Updates the `RPNlist` with the RPN version of the expression.
+
+### `evaluate()`
+Runs the full process of validating, converting to RPN, and calculating the result.
+
+- **Input:** None (operates on the global `expression` variable).
+- **Example:**
+  ```python
+  expression = "3 + 5 * 2"
+  evaluate()
+  ```
+- **Output:** Prints the RPN expression and the result.
+
+### `main()`
+The entry point of the program. Handles user input and runs the evaluation loop.
+
+- **Input:** None
+- **Example:**
+  ```python
+  main()
+  ```
+- **Output:** Interactively takes mathematical expressions from the user, evaluates them, and prints the results.
+
+## Example Usage
+
+```bash
+Enter an expression : 3 + 5 * 2
+RPN : ['3', '5', '2', '*', '+']
+Answer : [13.0]
+
+Enter an expression : 4 ^ 2 / 2
+RPN : ['4', '2', '^', '2', '/']
+Answer : [8.0]
 ```
-python main.py
-```
-
-The calculator GUI will appear. Use it as follows:
-
-- Click number buttons (0-9) to input numbers
-- Use operation buttons (+, -, *, /) for arithmetic operations
-- Use '^' for exponentiation
-- Use parentheses '(' and ')' to group expressions (input via keyboard)
-- Press '=' to calculate the result
-- Click 'Clear' to reset the calculator
 
 ## Error Handling
+- The program throws appropriate errors for division by zero, invalid characters, and invalid expression structure (e.g., consecutive operators).
 
-The calculator handles various errors, including:
-- Division by zero
-- Invalid expressions (e.g., consecutive operators, mismatched parentheses)
-- Syntax errors
-
-Error messages will be displayed in the calculator's display area.
-
-## Implementation Details
-
-- Uses the Shunting Yard algorithm to convert infix notation to Reverse Polish Notation (RPN)
-- Performs calculations using the RPN expression
-- GUI built with Tkinter for a simple, intuitive interface
-
-## Limitations
-
-- No direct input for negative numbers (subtraction works as expected)
-- No GUI buttons for parentheses or exponentiation (supported in backend)
-
-## Contributing
-
-Contributions are welcome! Here are some ways you can contribute:
-
-1. Report bugs
-2. Suggest new features
-3. Submit pull requests
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-
-- Thanks to all contributors who have helped shape this project
-- Inspired by basic calculator applications and a desire to understand RPN
-
----
-
-For any questions or support, please open an issue in the GitHub repository.
