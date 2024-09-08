@@ -1,5 +1,15 @@
 # Calculator Program
 
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Supported Operators](#supported-operators)
+- [Function List](#function-list)
+- [Example Usage](#example-usage)
+- [Error Handling](#error-handling)
+- [Cloning and Contribution](#cloning-and-contribution)
+- [License](#license)
+
 ## Overview
 This is a simple calculator program that evaluates mathematical expressions using **Reverse Polish Notation (RPN)**. The program supports basic arithmetic operations such as addition, subtraction, multiplication, division, and exponentiation. 
 
@@ -16,80 +26,28 @@ The program supports the following operators:
 - `/` (Division)
 - `^` (Exponentiation)
 
-## Program Functions
+## Function List
 
-### `validate_expression(expression)`
-Validates the mathematical expression to ensure it has valid characters and structure.
+- **`validate_expression(expression)`**  
+  Validates the expression for any syntax errors or invalid characters.
 
-- **Input:** String (`expression`)
-- **Example:**
-  ```python
-  validate_expression("3 + 5 * 2")
-  ```
-- **Output:** Returns `True` if valid, raises an error if invalid.
+- **`Calculate()`**  
+  Evaluates the expression in Reverse Polish Notation (RPN).
 
-### `Calculate()`
-Performs the calculation using the generated RPN list.
+- **`reverseString(text)`**  
+  Reverses a string (used internally for stack management).
 
-- **Input:** None (operates on the global `RPNlist` and `stack`).
-- **Example:** 
-  ```python
-  RPNlist = ['3', '5', '2', '*', '+']
-  Calculate()
-  ```
-- **Output:** Updates the `stack` with the result.
+- **`clearx()`**  
+  Resets the calculator by clearing the expression, stack, and RPN list.
 
-### `reverseString(text)`
-Reverses a given string. This function is used internally during the conversion of the operator stack.
+- **`convertToRPN()`**  
+  Converts an infix expression to Reverse Polish Notation.
 
-- **Input:** String (`text`)
-- **Example:**
-  ```python
-  reverseString("5+3")
-  ```
-- **Output:** `"3+5"`
+- **`evaluate()`**  
+  Manages the full process from validating to calculating the result.
 
-### `clearx()`
-Resets all global variables such as the expression, stack, and RPN list.
-
-- **Input:** None
-- **Example:**
-  ```python
-  clearx()
-  ```
-- **Output:** Clears global variables for the next calculation.
-
-### `convertToRPN()`
-Converts an infix expression (standard notation) into Reverse Polish Notation (RPN).
-
-- **Input:** None (operates on the global `expression` variable).
-- **Example:**
-  ```python
-  expression = "3 + 5 * 2"
-  convertToRPN()
-  ```
-- **Output:** Updates the `RPNlist` with the RPN version of the expression.
-
-### `evaluate()`
-Runs the full process of validating, converting to RPN, and calculating the result.
-
-- **Input:** None (operates on the global `expression` variable).
-- **Example:**
-  ```python
-  expression = "3 + 5 * 2"
-  evaluate()
-  ```
-- **Output:** Prints the RPN expression and the result.
-
-### `main()`
-The entry point of the program. Handles user input and runs the evaluation loop.
-
-- **Input:** None
-- **Example:**
-  ```python
-  main()
-  ```
-- **Output:** Interactively takes mathematical expressions from the user, evaluates them, and prints the results.
+- **`main()`**  
+  Entry point of the program that interacts with the user.
 
 ## Example Usage
 
@@ -104,5 +62,33 @@ Answer : [8.0]
 ```
 
 ## Error Handling
-- The program throws appropriate errors for division by zero, invalid characters, and invalid expression structure (e.g., consecutive operators).
+- **ZeroDivisionError**: Thrown when there is an attempt to divide by zero.
+- **SyntaxError**: Raised when the expression is syntactically incorrect.
+- **ValueError**: Occurs when the expression contains invalid characters or incorrect operator placement.
 
+## Cloning and Contribution
+
+### Cloning the repository
+To clone the repository, use the following command:
+```bash
+git clone <repository-url>
+```
+
+### Contribution
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Description of changes"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Create a pull request with a detailed explanation of your changes.
+
+## License
+This project is licensed under the MIT License. You can view the full license [here](https://opensource.org/licenses/MIT).
