@@ -11,7 +11,7 @@
 - [License](#license)
 
 ## Overview
-This is a simple calculator program that evaluates mathematical expressions using **Reverse Polish Notation (RPN)**. The program supports basic arithmetic operations such as addition, subtraction, multiplication, division, and exponentiation. 
+This simple calculator program evaluates mathematical expressions using **Reverse Polish Notation (RPN)**. The program supports basic arithmetic operations such as addition, subtraction, multiplication, division, and exponentiation. 
 
 ## Features
 - Validates expressions for syntax errors.
@@ -71,7 +71,7 @@ Answer : [8.0]
 ### Cloning the repository
 To clone the repository, use the following command:
 ```bash
-git clone <repository-url>
+git clone https://github.com/Tinovongajr/Calculator.git
 ```
 
 ### Contribution
