@@ -1,17 +1,16 @@
-
 import re
-expression=""
-RPNexpression=""
-stack=[]
-RPNlist=[]
-operators={
-    '+':1,
-    '-':1,
-    '*':2,
-    '/':2,
-    '^':3,
-}
 
+expression = ""
+RPNexpression = ""
+stack = []
+RPNlist = []
+operators = {
+    '+': 1,
+    '-': 1,
+    '*': 2,
+    '/': 2,
+    '^': 3,
+}
 
 
 def validate_expression(expression):
@@ -25,132 +24,50 @@ def validate_expression(expression):
     count = 0
     for i in range(len(expression)):
         if expression[i] in operators:
-            count+=1
-            if count >=2:
+            count += 1
+            if count >= 2:
                 raise ValueError("There are two operands following each other")
         else:
             count = 0
 
-
     return True
 
-def ConvertToRPN():
-
-    global expression
-    global RPNexpression
-    global RPNlist
-    global stack
-    global operators
-    stack.clear()
-    tempList=[]
-    brackets =[')','(']
-    bracketOpen=False
-    numFlag = 0
-    numString = ""
-    for index in range(len(expression)):
-        i = expression[index]
-        if i.isnumeric()or i =='.':
-            tempList.append(i)
-            numFlag += 1
-
-
-            if numFlag>1:
-                numString=""
-                for i in range(numFlag):
-                    if len(tempList)>0:
-                        num = tempList.pop()
-                        if int(num)>9:
-                            num = reverseString(num)
-                            numString+=num
-                        else:
-                            numString += str(num)
-
-                tempList.append(reverseString(numString))
-                if len(expression) == (index+1) and len(tempList)>0:
-                    RPNlist.append(tempList.pop())
-                    tempList.clear()
-                else:
-                    if expression[index +1].isnumeric():
-                        pass
-                    else:
-                        RPNlist.append(tempList.pop())
-                        tempList.clear()
-            elif numFlag==1 and (index+1) !=len(expression):
-                if expression[index+1].isnumeric():
-                    pass
-                else:
-                    RPNlist.append(tempList.pop())
-                    tempList.clear()
-            elif numFlag==1 and (index+1) ==len(expression):
-                RPNlist.append(tempList.pop())
-                tempList.clear()
-
-
-        elif i in operators:
-
-          if len(stack)>=1:
-
-              if operators.get(i) <= operators.get(stack[-1]):
-                  while stack and operators.get(i) <= operators.get(stack[-1]):
-                    RPNlist.append(stack.pop())
-
-                  stack.append(i)
-              else:
-                  stack.append(i)
-          elif len(stack)==0:
-              stack.append(i)
-
-
-
-        elif i in brackets:
-            numFlag=0
-            stack.append(i)
-            if i ==')':
-                stack.pop()
-                lastitem = stack[len(stack) - 1]
-                while len(stack) >0  and lastitem!='(':
-                    RPNlist.append(stack.pop())
-                    lastitem = stack[len(stack) - 1]
-                stack.pop()
-    else:
-       if len(stack)>0:
-           for i in range(len(stack)):
-              RPNlist.append(stack.pop())
 
 def Calculate():
     global RPNlist
     global stack
     global operators
 
-    #Confirm stack is empty first
-    stack.clear()
+    # Confirm stack is empty first
+    stack = []
 
     for count in range(len(RPNlist)):
-        num1=0
-        num2=0
-        if RPNlist[count].isnumeric():
+        num1 = 0
+        num2 = 0
+        if RPNlist[count].isnumeric() or '.' in RPNlist[count]:
             stack.append(RPNlist[count])
         elif RPNlist[count] in operators:
-            num2= float(stack.pop())
-            num1=float(stack.pop())
+            num2 = float(stack.pop())
+            num1 = float(stack.pop())
 
             if RPNlist[count] == '+':
                 stack.append(num1 + num2)
-            elif RPNlist[count]=='-':
+            elif RPNlist[count] == '-':
                 stack.append(num1 - num2)
-            elif RPNlist[count]=='*':
+            elif RPNlist[count] == '*':
                 stack.append(num1 * num2)
-            elif RPNlist[count]=='/':
+            elif RPNlist[count] == '/':
                 stack.append(num1 / num2)
-            elif RPNlist[count]=='^':
+            elif RPNlist[count] == '^':
                 stack.append(num1 ** num2)
-        #print(stack)
+
 
 def reverseString(text):
-    newText =""
+    newText = ""
     for i in range(len(text)):
-        newText+=text[(len(text)-1)-i]
-    return(newText)
+        newText += text[(len(text) - 1) - i]
+    return (newText)
+
 
 def clearx():
     global expression
@@ -162,14 +79,67 @@ def clearx():
     stack = []
     RPNlist = []
 
+
+def convertToRPN():
+    global expression
+    stack = ""
+    tempNum = ""
+
+    for index in range(len(expression)):
+        i = expression[index]
+
+        if i.isnumeric() or i == '.':
+            tempNum += str(i)
+            if (len(expression) - index) == 1:
+                if tempNum:
+                    RPNlist.append(tempNum)
+        elif i in ['(', ')']:
+            stack += str(i)
+            if i == ')':
+                stack = stack[:-1]
+                if tempNum != "":
+                    RPNlist.append(tempNum)
+                tempNum = ""
+                while stack[-1] != '(' and len(stack) > 1:
+                    RPNlist.append(stack[-1])
+                    stack = stack[:-1]
+                stack = stack[:-1]
+        elif i in operators:
+            if tempNum:
+                RPNlist.append(tempNum)
+            if len(stack) < 1 or stack[-1] == '(':
+                stack += str(i)
+            elif i == stack[-1] and stack[-1] != '(':
+                RPNlist.append(i)
+            elif stack[-1] != '(':
+                if operators.get(i) > operators.get(stack[-1]) and stack[-1] != '(':
+                    stack += str(i)
+                elif operators.get(i) == operators.get(stack[-1]):
+                    RPNlist.append(stack[-1])
+                    newStack = stack[:-1]
+                    stack = newStack + str(i)
+            elif operators.get(i) < operators.get(stack[-1]):
+                while operators.get(i) < operators.get(stack[-1]):
+                    RPNlist.append(stack[-1])
+                    newStack = stack[:-1]
+                    stack = newStack + str(i)
+
+            tempNum = ""
+    if stack:
+        RPNlist.extend([*(reverseString(stack))])
+
+
 def evaluate():
     global expression
+    global stack
     try:
+
         validate_expression(expression)
-        ConvertToRPN()
+        convertToRPN()
         Calculate()
-        Answer = str(stack[0])
-        print(Answer)
+
+        print("RPN : ", RPNlist)
+        print("Answer :  ", str(stack))
         clearx()
     except ZeroDivisionError:
         print("Division by zero error")
@@ -177,23 +147,29 @@ def evaluate():
         print("Syntax error")
     except Exception as e:
         print(e)
-def main():
 
+
+def main():
+    global RPNlist
+    global stack
     global expression
-    print('#'*50)
+    print('#' * 50)
     print()
     print('******', "Welcome to my Calculator", '******')
     print()
     print("Enter 'w' to stop")
     print()
-    print('_'*50)
+    print('_' * 50)
     print()
     expression = input("Enter an expression : ")
     print()
+    expression.strip()
     while expression != 'w':
         evaluate()
         print()
         expression = input("Enter an expression : ")
+        stack = []
+        RPNlist = []
+
+
 main()
-
-
